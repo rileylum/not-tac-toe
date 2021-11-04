@@ -7,21 +7,18 @@ function Game() {
     const [gameBoard, setGameBoard] = useState(Array.from(Array(9)).map(() => false));
 
     function handeClick(evt) {
-        console.log(evt.target.id);
 
+        const clickedCell = parseInt(evt.target.id)
+
+        // flip the value of the clicked cell
         const newBoard = gameBoard.map((cell, idx) => {
-            console.log(idx, evt.target.id);
-            if (idx == evt.target.id) {
-                console.log(!cell);
+            if (idx === clickedCell) {
                 return !cell;
             }
             return cell;
-        })
-
-        console.log(newBoard);
+        });
 
         setGameBoard(newBoard);
-
     }
 
     return (
