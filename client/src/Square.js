@@ -1,8 +1,10 @@
 import React from "react";
+import './Square.css';
+
 
 function Square({id, value, clickHandler}) {
     return (
-        <td id={id} onClick={clickHandler}>{value ? "X" : "O"}</td>
+        <button id={id} onClick={clickHandler} className="Square">{value ? "X" : "O"}</button>
     )
 }
 
