@@ -1,10 +1,11 @@
 import React, {useState} from "react";
+import Board from './Board';
 
 
-function Game() {
+function Game({boardSize = 3}) {
 
     // set up 3x3 gameboard in state
-    const [gameBoard, setGameBoard] = useState(Array.from(Array(9)).map(() => false));
+    const [gameBoard, setGameBoard] = useState(Array.from(Array(boardSize**2)).map(() => false));
 
     function handeClick(evt) {
 
@@ -24,24 +25,7 @@ function Game() {
     return (
         <div>
             <h1>GAME COMPONENT</h1>
-            <table>
-                <tr>
-                    <td id="0" onClick={handeClick}>{gameBoard[0] ? "X" : "O"}</td>
-                    <td id="1" onClick={handeClick}>{gameBoard[1] ? "X" : "O"}</td>
-                    <td id="2" onClick={handeClick}>{gameBoard[2] ? "X" : "O"}</td>
-                </tr>
-                <tr>
-                    <td id="3" onClick={handeClick}>{gameBoard[3] ? "X" : "O"}</td>
-                    <td id="4" onClick={handeClick}>{gameBoard[4] ? "X" : "O"}</td>
-                    <td id="5" onClick={handeClick}>{gameBoard[5] ? "X" : "O"}</td>
-                </tr>
-                <tr>
-                    <td id="6" onClick={handeClick}>{gameBoard[6] ? "X" : "O"}</td>
-                    <td id="7" onClick={handeClick}>{gameBoard[7] ? "X" : "O"}</td>
-                    <td id="8" onClick={handeClick}>{gameBoard[8] ? "X" : "O"}</td>
-                </tr>
-            </table>
-
+            <Board gameBoard={gameBoard} clickHandler={handeClick}/>
         </div>
     )
 }

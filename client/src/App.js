@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <h1>MY APP</h1>
-      <Game />
+      <Game boardSize={3}/>
     </div>
   )
 }
