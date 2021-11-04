@@ -2,7 +2,9 @@ import React from "react"
 
 function App() {
   return (
-    <h1>MY APP</h1>
+    <div>
+      <h1>MY APP</h1>
+    </div>
   )
 }
 
