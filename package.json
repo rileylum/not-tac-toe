@@ -1,0 +1,25 @@
+{
+  "name": "not-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe with only X's and played misere",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rileylum/not-tac-toe.git"
+  },
+  "author": "Riley Lum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rileylum/not-tac-toe/issues"
+  },
+  "homepage": "https://github.com/rileylum/not-tac-toe#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
+}
