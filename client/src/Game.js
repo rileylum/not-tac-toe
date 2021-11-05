@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Board from './Board';
 
 
@@ -9,6 +9,10 @@ function Game({boardSize = 3}) {
         board: Array.from(Array(boardSize**2)).map(() => false),
         gameOver: false
     });
+
+    useEffect(() => {
+        setGameState({...gameState, board: Array.from(Array(boardSize**2)).map(() => false)})
+    }, [boardSize])
 
     function handeClick(evt) {
         if (!gameState.gameOver) {
