@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Board from './Board';
 
 
@@ -40,43 +40,46 @@ function Game({boardSize = 3}) {
         let rowCheck = true;
         for (let i = cellRow*boardSize; i < cellRow*boardSize+boardSize; i++) {
             if(i !== clickedCell) {
-                if (!gameState.board[i]) {rowCheck = false};
+                if (!gameState.board[i]) rowCheck = false;
             }
         }
-        if (rowCheck) {
-            return true;
-        }
+        if (rowCheck) return true;
 
         // check column
         let colCheck = true;
         for (let i = cellCol; i < boardSize**2; i += boardSize) {
             if (i !== clickedCell) {
  
-                if(!gameState.board[i]) {colCheck = false};
+                if(!gameState.board[i]) colCheck = false;
             }
         }
-        if (colCheck) {
-            return true;
-        }
+        if (colCheck) return true;
 
-        // check diagonal
+        // check diagonals
         let diagCheck;
         console.log(cellCol, cellRow);
+        // left to right
         if (cellCol === cellRow) {
-            // left to right
             diagCheck = true;
             for (let i = 0; i < boardSize**2; i+=(boardSize+1)) {
                 if (i !== clickedCell) {
-                    if(!gameState.board[i]) {diagCheck = false};
+                    if(!gameState.board[i]) diagCheck = false;
                 }
             }
-            if (diagCheck) {
-                return true;
-            }
-
-            // NOT CHECKING RIGHT TO LEFT
-
+            if (diagCheck) return true;
         }
+
+        // right to left
+        if ((cellCol+cellRow) === boardSize-1) {
+            diagCheck = true;
+            for (let i = boardSize-1; i < boardSize**2-1; i += (boardSize-1)) {
+                if (i !== clickedCell) {
+                    if (!gameState.board[i]) diagCheck = false;
+                }
+            }
+            if (diagCheck) return true;
+        }
+
         return false;
     }
 
