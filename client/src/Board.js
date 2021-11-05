@@ -4,10 +4,10 @@ import './Board.css'
 
 function Board({gameBoard, boardSize, clickHandler}) {
 
-    function gridStyle() { return {gridTemplateColumns: `repeat(${boardSize}, 50px)`, gridTemplateRows: `repeat(${boardSize}, 50px)`}}
+    let gridStyle = {gridTemplateColumns: `repeat(${boardSize}, 50px)`, gridTemplateRows: `repeat(${boardSize}, 50px)`}
 
     return (
-    <div className="Board" style={gridStyle()}>
+    <div className="Board" style={gridStyle}>
         {gameBoard.map((cell, idx) => {
             return (<Square id={idx} value={cell} clickHandler={clickHandler} />)
         })}
