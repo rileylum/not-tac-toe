@@ -1,1 +1,8 @@
 @import-normalize;
+
+body {
+  height: 100vh;
+  background: linear-gradient(#f4a261, #e9c46a);
+  background-repeat: no-repeat;
+  background-size: cover;
+}

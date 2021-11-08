@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Board from './Board';
 
+import './Game.css'
 
 function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
@@ -104,7 +105,7 @@ function Game({boardNum = 3, boardSize = 3}) {
     }
 
     return (
-        <div>
+        <div className="Game">
             <h1>GAME COMPONENT</h1>
             {gameState.boards.map((board, idx) => {
                 return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)

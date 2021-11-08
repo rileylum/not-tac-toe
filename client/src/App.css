@@ -1,0 +1,14 @@
+.container {
+  margin: auto;
+  margin-top: 50px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #264653;
+  border: 0px solid;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}

@@ -1,0 +1,50 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.Home h1 {
+  font-size: 3em;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.Home-button {
+  background-color: transparent;
+  border: 3px solid #e76f51;
+  color: white;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 1px;
+  margin: 20px 0px;
+  padding: 1.2em 2.8em;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 150ms ease-in-out;
+}
+
+.Home-button:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 100%;
+  background: #e76f51;
+  z-index: -1;
+  transition: width 150ms ease-in-out;
+}
+
+.Home-button:hover {
+  color: white;
+}
+
+.Home-button:hover:after {
+  width: 110%;
+}
