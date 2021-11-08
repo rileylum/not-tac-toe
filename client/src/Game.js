@@ -7,6 +7,7 @@ function Game({boardNum = 3, boardSize = 3}) {
     const [gameState, setGameState] = useState({
         boards: createBoards(boardNum, boardSize),
         gameOver: false,
+        playerOneNext: true,
     });
 
     useEffect(() => {
@@ -40,15 +41,16 @@ function Game({boardNum = 3, boardSize = 3}) {
 
     function handeClick(board_id, cell_id) {
         // deep clone state
-        const newBoards = JSON.parse(JSON.stringify(gameState.boards));
+        const oldState = JSON.parse(JSON.stringify(gameState));
+        const newBoards = oldState.boards;
         // create reference of clicked board
         const currentBoard = newBoards[board_id];
         // flip clicked cell
         currentBoard.board[cell_id] = !currentBoard.board[cell_id];
         // check if clicked board is complete
         currentBoard.complete = isBoardComplete(currentBoard.board, cell_id);
-        // update game state with new boards
-        setGameState({...gameState, boards: newBoards});
+        // update game state with new boards and change current player
+        setGameState({...gameState, boards: newBoards, playerOneNext: !oldState.playerOneNext});
     }
 
     function isBoardComplete(currentBoard, cell_id) {
@@ -107,7 +109,9 @@ function Game({boardNum = 3, boardSize = 3}) {
             {gameState.boards.map((board, idx) => {
                 return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
             })}
+            {!gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Turn</p>) : (<p>Player Two Turn</p>))}
             {gameState.gameOver && (<p>GAME OVER</p>)}
+            {gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Wins</p>) : (<p>Player Two Wins</p>))}
         </div>
     )
 }
