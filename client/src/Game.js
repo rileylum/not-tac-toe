@@ -6,7 +6,7 @@ function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
     const [gameState, setGameState] = useState({
         boards: createBoards(boardNum, boardSize),
-        gameOver: false
+        gameOver: false,
     });
 
     useEffect(() => {
@@ -105,7 +105,7 @@ function Game({boardNum = 3, boardSize = 3}) {
         <div>
             <h1>GAME COMPONENT</h1>
             {gameState.boards.map((board, idx) => {
-                return (<Board key={board.board_id} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
+                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
             })}
             {gameState.gameOver && (<p>GAME OVER</p>)}
         </div>
