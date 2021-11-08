@@ -2,49 +2,71 @@ import React, {useEffect, useState} from "react";
 import Board from './Board';
 
 
-function Game({boardSize = 3}) {
-
+function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
     const [gameState, setGameState] = useState({
+        boards: createBoards(boardNum, boardSize),
         board: Array.from(Array(boardSize**2)).map(() => false),
         gameOver: false
     });
 
+    // likely just need this in testing
+    // useEffect(() => {
+    //     setGameState({...gameState, board: Array.from(Array(boardSize**2)).map(() => false), boards: createBoards(boardNum, boardSize)})
+    // }, [boardSize])
+
     useEffect(() => {
-        setGameState({...gameState, board: Array.from(Array(boardSize**2)).map(() => false)})
-    }, [boardSize])
-
-    function handeClick(evt) {
-        if (!gameState.gameOver) {
-            const clickedCell = parseInt(evt.target.id)
-            const newBoard = flipCell(clickedCell);         
-            const newGameOver = isGameOver(clickedCell);
-            console.log(gameState.gameOver, newGameOver);
-            setGameState({...gameState, board: newBoard, gameOver: newGameOver});
+        if (isGameOver()) {
+            setGameState({...gameState, gameOver: true})
         }
-    }
+    }, [gameState.boards])
 
-    function flipCell(cell_id) {
-        const oldBoard = gameState.board;
-        const newBoard = oldBoard.map((cell, idx) => {
-            if (idx === cell_id) {
-                return !cell;
+    // create object which contains each board
+    function createBoards(boardNum, boardSize) {
+        const boards = [];
+        for (let i = 0; i < boardNum; i++) {
+            let board = {
+                board_id: i,
+                board: Array(boardSize**2).fill(false),
+                complete: false
+            };
+            boards.push(board);
+        }
+        return boards;
+    }
+    // check if all boards are completed
+    function isGameOver() {
+        for (let board of gameState.boards) {
+            console.log(board.complete);
+            if (!board.complete) {
+                return false;
             }
-            return cell;
-        });
-        return newBoard;
+        }
+        return true;;
     }
 
-    function isGameOver(clickedCell) {
-        console.log(`is game over ${clickedCell}`);
-        const cellRow = Math.floor((clickedCell)/boardSize);
-        const cellCol = (clickedCell)%boardSize;
+    function handeClick(board_id, cell_id) {
+        // deep clone state
+        const newBoards = JSON.parse(JSON.stringify(gameState.boards));
+        // create reference of clicked board
+        const currentBoard = newBoards[board_id];
+        // flip clicked cell
+        currentBoard.board[cell_id] = !currentBoard.board[cell_id];
+        // check if clicked board is complete
+        currentBoard.complete = isBoardComplete(currentBoard.board, cell_id);
+        // update game state with new boards
+        setGameState({...gameState, boards: newBoards});
+    }
+
+    function isBoardComplete(currentBoard, cell_id) {
+        const cellRow = Math.floor((cell_id)/boardSize);
+        const cellCol = (cell_id)%boardSize;
 
         // check row
         let rowCheck = true;
         for (let i = cellRow*boardSize; i < cellRow*boardSize+boardSize; i++) {
-            if(i !== clickedCell) {
-                if (!gameState.board[i]) rowCheck = false;
+            if(i !== cell_id) {
+                if (!currentBoard[i]) rowCheck = false;
             }
         }
         if (rowCheck) return true;
@@ -52,9 +74,9 @@ function Game({boardSize = 3}) {
         // check column
         let colCheck = true;
         for (let i = cellCol; i < boardSize**2; i += boardSize) {
-            if (i !== clickedCell) {
+            if (i !== cell_id) {
  
-                if(!gameState.board[i]) colCheck = false;
+                if(!currentBoard[i]) colCheck = false;
             }
         }
         if (colCheck) return true;
@@ -66,8 +88,8 @@ function Game({boardSize = 3}) {
         if (cellCol === cellRow) {
             diagCheck = true;
             for (let i = 0; i < boardSize**2; i+=(boardSize+1)) {
-                if (i !== clickedCell) {
-                    if(!gameState.board[i]) diagCheck = false;
+                if (i !== cell_id) {
+                    if(!currentBoard[i]) diagCheck = false;
                 }
             }
             if (diagCheck) return true;
@@ -77,8 +99,8 @@ function Game({boardSize = 3}) {
         if ((cellCol+cellRow) === boardSize-1) {
             diagCheck = true;
             for (let i = boardSize-1; i < boardSize**2-1; i += (boardSize-1)) {
-                if (i !== clickedCell) {
-                    if (!gameState.board[i]) diagCheck = false;
+                if (i !== cell_id) {
+                    if (!currentBoard[i]) diagCheck = false;
                 }
             }
             if (diagCheck) return true;
@@ -90,7 +112,10 @@ function Game({boardSize = 3}) {
     return (
         <div>
             <h1>GAME COMPONENT</h1>
-            <Board gameBoard={gameState.board} gameOver={gameState.gameOver} boardSize={boardSize} clickHandler={handeClick}/>
+            {gameState.boards.map((board, idx) => {
+                return (<Board key={board.board_id} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
+            })}
+            {/* <Board gameBoard={gameState.board} gameOver={gameState.gameOver} boardSize={boardSize} clickHandler={handeClick}/> */}
             {gameState.gameOver && (<p>GAME OVER</p>)}
         </div>
     )

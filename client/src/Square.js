@@ -2,9 +2,9 @@ import React from "react";
 import './Square.css';
 
 
-function Square({id, value, clickHandler}) {
+function Square({board_id, cell_id, value, clickHandler}) {
     return (
-        <button id={id} onClick={clickHandler} className="Square">{value ? "X" : "O"}</button>
+        <button onClick={() => clickHandler(board_id, cell_id)} className="Square">{value ? "X" : "O"}</button>
     )
 }
 
