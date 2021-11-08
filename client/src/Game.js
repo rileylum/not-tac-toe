@@ -6,20 +6,14 @@ function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
     const [gameState, setGameState] = useState({
         boards: createBoards(boardNum, boardSize),
-        board: Array.from(Array(boardSize**2)).map(() => false),
         gameOver: false
     });
-
-    // likely just need this in testing
-    // useEffect(() => {
-    //     setGameState({...gameState, board: Array.from(Array(boardSize**2)).map(() => false), boards: createBoards(boardNum, boardSize)})
-    // }, [boardSize])
 
     useEffect(() => {
         if (isGameOver()) {
             setGameState({...gameState, gameOver: true})
         }
-    }, [gameState.boards])
+    }, [gameState.boards]);
 
     // create object which contains each board
     function createBoards(boardNum, boardSize) {
@@ -37,7 +31,6 @@ function Game({boardNum = 3, boardSize = 3}) {
     // check if all boards are completed
     function isGameOver() {
         for (let board of gameState.boards) {
-            console.log(board.complete);
             if (!board.complete) {
                 return false;
             }
@@ -83,7 +76,6 @@ function Game({boardNum = 3, boardSize = 3}) {
 
         // check diagonals
         let diagCheck;
-        console.log(cellCol, cellRow);
         // left to right
         if (cellCol === cellRow) {
             diagCheck = true;
@@ -115,7 +107,6 @@ function Game({boardNum = 3, boardSize = 3}) {
             {gameState.boards.map((board, idx) => {
                 return (<Board key={board.board_id} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
             })}
-            {/* <Board gameBoard={gameState.board} gameOver={gameState.gameOver} boardSize={boardSize} clickHandler={handeClick}/> */}
             {gameState.gameOver && (<p>GAME OVER</p>)}
         </div>
     )
