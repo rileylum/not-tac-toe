@@ -1,6 +1,7 @@
 const { ApolloServer } = require('apollo-server-express');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const express = require('express');
+const path = require('path');
 const http = require('http');
 
 const {typeDefs, resolvers} = require('./schemas');
@@ -22,8 +23,10 @@ async function startApolloServer(typeDefs, resolvers) {
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
 
+    app.use(express.static(path.join(__dirname, '../client/build')));
+
     app.get('*', (req, res) => {
-        res.send("HI");
+        res.sendFile(path.join(__dirname, '../client/public/index.html'));
     })
     
     await new Promise(resolve => httpServer.listen({port:4000}, resolve));
