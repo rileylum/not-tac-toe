@@ -20,7 +20,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 100%;
 }
 
 .Setup-inputwrapper h1 {
@@ -78,7 +78,7 @@ h2 {
 
 .Setup-startgame {
   width: 100%;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .Setup-startgame button {

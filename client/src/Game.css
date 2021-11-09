@@ -14,6 +14,7 @@
 .Game-boardwrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .Game-currentplayer {
