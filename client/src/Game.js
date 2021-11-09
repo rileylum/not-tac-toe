@@ -107,9 +107,11 @@ function Game({boardNum = 3, boardSize = 3}) {
     return (
         <div className="Game">
             <h1>GAME COMPONENT</h1>
+            <div className="Game-boardwrapper">
             {gameState.boards.map((board, idx) => {
                 return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
             })}
+            </div>
             {!gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Turn</p>) : (<p>Player Two Turn</p>))}
             {gameState.gameOver && (<p>GAME OVER</p>)}
             {gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Wins</p>) : (<p>Player Two Wins</p>))}

@@ -1,10 +1,17 @@
 .Game {
   margin: 10px;
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .Game h1 {
   font-size: 3em;
   font-weight: 300;
   letter-spacing: 3px;
+}
+
+.Game-boardwrapper {
+  display: flex;
+  flex-wrap: wrap;
 }
