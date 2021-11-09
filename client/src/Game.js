@@ -108,11 +108,16 @@ function Game({boardNum = 3, boardSize = 3}) {
         <div className="Game">
             <h1>GAME COMPONENT</h1>
             <div className="Game-boardwrapper">
-            {gameState.boards.map((board, idx) => {
+            {gameState.boards.map((board) => {
                 return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
             })}
             </div>
-            {!gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Turn</p>) : (<p>Player Two Turn</p>))}
+            {!gameState.gameOver &&
+            (<p className="Game-currentplayer">
+                <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>Player One</span>
+                <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>Player Two</span>
+            </p>)
+            }
             {gameState.gameOver && (<p>GAME OVER</p>)}
             {gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Wins</p>) : (<p>Player Two Wins</p>))}
         </div>
