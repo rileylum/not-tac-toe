@@ -6,18 +6,17 @@ import './Home.css'
 function Home() {
     return (
     <div className="Home">
-        <h1>NOT TAC TOE</h1>
-        <Link to="/game">
+        <Link to="/setup">
             <button className="Home-button">
                 VS COMPUTER
             </button>
         </Link>
-        <Link to="/game">
+        <Link to="/setup">
             <button className="Home-button">
                 LOCAL MULTIPLAYER
             </button>
         </Link>
-        <Link to="/game">
+        <Link to="/setup">
             <button className="Home-button">
                 ONLINE MULTIPLAYER
             </button>

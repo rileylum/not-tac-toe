@@ -106,7 +106,7 @@ function Game({boardNum = 3, boardSize = 3}) {
 
     return (
         <div className="Game">
-            <h1>GAME COMPONENT</h1>
+            
             <div className="Game-boardwrapper">
             {gameState.boards.map((board) => {
                 return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
