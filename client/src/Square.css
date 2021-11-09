@@ -6,4 +6,18 @@
   margin: 2%;
   font-family: "Permanent Marker", cursive;
   font-size: 2em;
+  cursor: pointer;
+}
+
+.Square:hover:before {
+  content: "X";
+}
+
+.Square:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.Square:disabled:hover:before {
+  content: "";
 }
