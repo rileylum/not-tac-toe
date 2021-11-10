@@ -5,7 +5,7 @@ const path = require('path');
 const http = require('http');
 
 const {typeDefs, resolvers} = require('./schemas');
-
+const {authMiddleware} = require('./utils/auth');
 const db = require('./config/connection');
 
 async function startApolloServer(typeDefs, resolvers) {
@@ -15,6 +15,7 @@ async function startApolloServer(typeDefs, resolvers) {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        context: authMiddleware,
         plugins: [ApolloServerPluginDrainHttpServer({httpServer})],
     }); 
 
@@ -24,7 +25,7 @@ async function startApolloServer(typeDefs, resolvers) {
 
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
-
+    
     app.use(express.static(path.join(__dirname, '../client/build')));
 
     app.get('*', (req, res) => {

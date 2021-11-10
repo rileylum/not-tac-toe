@@ -1,13 +1,27 @@
 const { gql } = require('apollo-server-core');
 
 const typeDefs = gql`
-    type Book {
-        title: String
-        author: String
+    type User {
+        _id: ID
+        username: String
+        wins: Int
+        losses: Int
+    }
+
+    type Auth {
+        token: ID!
+        user: User
     }
 
     type Query {
-        books: [Book]
+        user(username: String!): User
+    }
+
+    type Mutation {
+        login(username: String!, password: String!): Auth
+        addUser(username: String!, password: String!): Auth
+        incrementWin(username: String!): User
+        incrementLoss(username: String!): User
     }
 `
 module.exports = typeDefs;
