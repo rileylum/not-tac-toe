@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'
-import App from './App';
 import {HashRouter} from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import App from './App';
+
+import './index.css'
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+})
+
 
 ReactDOM.render(
   <React.StrictMode>
+    <ApolloProvider client={client}>
     <HashRouter>
       <App />
     </HashRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
