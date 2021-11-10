@@ -5,10 +5,11 @@ import './Game.css'
 
 function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
+
     const [gameState, setGameState] = useState({
         boards: createBoards(boardNum, boardSize),
         gameOver: false,
-        playerOneNext: true,
+        playerOneNext: Math.random() < 0.5,
     });
 
     useEffect(() => {
