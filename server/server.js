@@ -6,6 +6,8 @@ const http = require('http');
 
 const {typeDefs, resolvers} = require('./schemas');
 
+const db = require('./config/connection');
+
 async function startApolloServer(typeDefs, resolvers) {
     const PORT = process.env.PORT || 3001
     const app = express();
@@ -28,12 +30,13 @@ async function startApolloServer(typeDefs, resolvers) {
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, '../client/public/index.html'));
     })
-    
+    db.once( 'open', async () => {
     await new Promise(resolve => httpServer.listen({port:4000}, resolve));
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
     app.listen(PORT, () => {
         console.log(`🚀 Server ready at http://localhost:3001`);
     })
+})
     
 }
 
