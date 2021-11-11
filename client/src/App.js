@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Game from "./Game";
+
 import Home from "./pages/Home";
 import Setup from "./pages/Setup";
-
-import { useQuery } from "@apollo/client";
+import Game from "./pages/Game";
 
 import './App.css'
 

@@ -1,6 +1,6 @@
 import React from "react";
-import './Square.css';
 
+import './Square.css';
 
 function Square({board_id, cell_id, value, complete, clickHandler}) {
     return (

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Board from './Board';
+import Board from '../components/Board';
 
 import './Game.css'
 

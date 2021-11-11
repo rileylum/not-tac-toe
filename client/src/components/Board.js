@@ -1,5 +1,6 @@
 import React from "react";
 import Square from './Square'
+
 import './Board.css'
 
 function Board({board_id, board, boardSize, complete, clickHandler}) {
