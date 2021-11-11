@@ -12,10 +12,19 @@ function Navbar() {
             <label className="Navbar-logo">NOT TAC TOE</label>
             <ul className="Navbar-links">
                 <li><NavLink to="/">Home</NavLink></li>
-                <li><NavLink to="/login">Login</NavLink></li>
-                <li><NavLink to="/signup">Signup</NavLink></li>
-                <li><NavLink to="/profile">Profile</NavLink></li>
-                <li><a href="#" onClick={Auth.logout}>Logout</a></li>
+                {Auth.loggedIn() ? (
+                    <>
+                    <li><NavLink to="/profile">Profile</NavLink></li>
+                    <li><a href="#" onClick={Auth.logout}>Logout</a></li>
+                    </>
+                ) : (
+                    <>
+                    <li><NavLink to="/login">Login</NavLink></li>
+                    <li><NavLink to="/signup">Signup</NavLink></li>
+                    </>
+                )}
+                
+                
             </ul>
         </nav>
     )

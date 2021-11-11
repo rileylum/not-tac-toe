@@ -1,4 +1,8 @@
 import React, {useEffect, useState} from "react";
+import { useMutation } from "@apollo/client";
+import { INCREMENT_WIN, INCREMENT_LOSS } from "../utils/mutations";
+import Auth from '../utils/auth';
+
 import Board from '../components/Board';
 
 import './Game.css'
@@ -12,8 +16,21 @@ function Game({boardNum = 3, boardSize = 3}) {
         playerOneNext: Math.random() < 0.5,
     });
 
+    const [incrementWin] = useMutation(INCREMENT_WIN);
+    const [incrementLoss] = useMutation(INCREMENT_LOSS);
+
     useEffect(() => {
         if (isGameOver()) {
+            if (Auth.loggedIn()) {
+                console.log("user logged in");
+                if(!gameState.playerOneNext) {
+                    console.log("user wins");
+                    incrementWin();
+                } else {
+                    console.log("user loses");
+                    incrementLoss();
+                }
+            }
             setGameState({...gameState, gameOver: true})
         }
     }, [gameState.boards]);
@@ -120,7 +137,7 @@ function Game({boardNum = 3, boardSize = 3}) {
             </p>)
             }
             {gameState.gameOver && (<p>GAME OVER</p>)}
-            {gameState.gameOver && (gameState.playerOneNext ? (<p>Player One Wins</p>) : (<p>Player Two Wins</p>))}
+            {gameState.gameOver && (gameState.playerOneNext ? (<p>Player Two Wins</p>) : (<p>Player One Wins</p>))}
         </div>
     )
 }

@@ -29,25 +29,21 @@ export const ADD_USER = gql`
 `
 
 export const INCREMENT_WIN = gql`
-    mutation incrementWin($username: String!) {
-        incrementWin (username: $username) {
-            user {
-                _id
-                username
-                wins
-            }
+    mutation incrementWin {
+        incrementWin {
+            _id
+            username
+            wins
         }
     }
 `
 
 export const INCREMENT_LOSS = gql`
-    mutation incrementLoss($username: String!) {
-        incrementLoss (username: $username) {
-            user {
-                _id
-                username
-                losses
-            }
+    mutation incrementLoss {
+        incrementLoss {
+            _id
+            username
+            losses
         }
     }
 `

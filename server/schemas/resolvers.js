@@ -20,7 +20,7 @@ const {signToken} = require('../utils/auth');
         const correctPw = await user.isCorrectPassword(password);
 
         if(!correctPw) {
-          throw new AuthenticationError("Incorrection username or password");
+          throw new AuthenticationError("Incorrect username or password");
         }
 
         const token = signToken(user);
@@ -37,6 +37,7 @@ const {signToken} = require('../utils/auth');
         return {token, user}
       },
       incrementWin: async (_, __, context) => {
+        console.log(context);
         try {
           const user = await User.findOneAndUpdate({_id: context.user._id}, {$inc: {wins : 1}});
           return user;

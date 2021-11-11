@@ -20,8 +20,8 @@ const typeDefs = gql`
     type Mutation {
         login(username: String!, password: String!): Auth
         addUser(username: String!, password: String!): Auth
-        incrementWin(username: String!): User
-        incrementLoss(username: String!): User
+        incrementWin: User
+        incrementLoss: User
     }
 `
 module.exports = typeDefs;
