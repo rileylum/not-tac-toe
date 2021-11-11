@@ -4,6 +4,8 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { LOGIN_USER } from '../utils/mutations';
 
+import './Form.css'
+
 function LoginForm() {
     const [userFormData, setUserFormData] = useState({username: '', password: ''});
     const [loginUser] = useMutation(LOGIN_USER);
@@ -39,15 +41,19 @@ function LoginForm() {
     }
 
     return (
-        <div>
-            <form>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" name="username" value={userFormData.username} onChange={handleInputChange} required/>
-                <label htmlFor="password">Password</label>
-                <input type="text" id="password" name="password" value={userFormData.password} onChange={handleInputChange} required/>
-                <button onClick={handleFormSubmit}>SIGN UP</button>
+            <form className="Form">
+                <div className="Form-item" >
+                <label className="Form-label" htmlFor="username">Username</label>
+                <input className="Form-input" type="text" id="username" name="username" value={userFormData.username} onChange={handleInputChange} required/>
+                </div>
+                <div className="Form-item" >
+                <label className="Form-label" htmlFor="password">Password</label>
+                <input className="Form-input" type="password" id="password" name="password" value={userFormData.password} onChange={handleInputChange} required/>
+                </div>
+                <div className="Form-item" >
+                <button onClick={handleFormSubmit}>LOGIN</button>
+                </div>
             </form>
-        </div>
     )
 }
 

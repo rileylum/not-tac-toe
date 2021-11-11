@@ -1,0 +1,43 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.Form-item {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 10px;
+}
+
+.Form-label {
+  color: white;
+  margin: 0.5rem;
+  font-size: 1rem;
+}
+
+.Form-input {
+  width: 100%;
+  border: 1px solid #dadce0;
+  border-radius: 0.5rem;
+  outline: none;
+  padding: 0.5rem;
+  background: white;
+  font-size: 1rem;
+}
+
+.Form-item button {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: white;
+  border: 3px solid #e76f51;
+  padding: 1rem;
+  background: transparent;
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+}
