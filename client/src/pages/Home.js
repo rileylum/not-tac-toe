@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 
 import './Home.css'
 
-function Home() {
+function Home({handleGameMode}) {
     return (
     <div className="Home">
         <Link to="/setup">
-            <button className="Home-button">
+            <button onClick={() => handleGameMode("computer")} className="Home-button">
                 VS COMPUTER
             </button>
         </Link>
         <Link to="/setup">
-            <button className="Home-button">
+            <button onClick={() => handleGameMode("local")} className="Home-button">
                 LOCAL MULTIPLAYER
             </button>
         </Link>
         <Link to="/setup">
-            <button className="Home-button">
+            <button onClick={() => handleGameMode("online")} className="Home-button">
                 ONLINE MULTIPLAYER
             </button>
         </Link>

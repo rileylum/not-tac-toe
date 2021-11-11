@@ -8,7 +8,7 @@ import Board from '../components/Board';
 import './Game.css'
 
 
-function Game({boardNum = 3, boardSize = 3}) {
+function Game({boardNum = 3, boardSize = 3, mode='computer'}) {
     // set up 3x3 gameboard in state
 
     const [gameState, setGameState] = useState({
@@ -20,7 +20,17 @@ function Game({boardNum = 3, boardSize = 3}) {
     const [incrementWin] = useMutation(INCREMENT_WIN);
     const [incrementLoss] = useMutation(INCREMENT_LOSS);
 
+    const playerTwo =  setPlayerTwo();
+    function setPlayerTwo() {
+        if (mode === 'computer') {
+            return "Computer"
+        } else {
+            return "Player Two"
+        }
+    }
+
     useEffect(() => {
+        // handle game over
         if (isGameOver()) {
             if (Auth.loggedIn()) {
                 console.log("user logged in");
@@ -33,6 +43,11 @@ function Game({boardNum = 3, boardSize = 3}) {
                 }
             }
             setGameState({...gameState, gameOver: true})
+        } else {
+            // if game mode is vs computer handle computer turn
+            if (mode === 'computer' && gameState.playerOneNext) {
+                setTimeout(computerTurn, 1000);
+            }
         }
     }, [gameState.boards]);
 
@@ -65,6 +80,19 @@ function Game({boardNum = 3, boardSize = 3}) {
             }
         }
         return true;;
+    }
+
+    function computerTurn() {
+        let randBoard;
+        do {
+            randBoard = Math.floor(Math.random() * boardNum);
+        } while (gameState.boards[randBoard].complete);
+        let randCell;
+        do {
+            randCell = Math.floor(Math.random() * (boardSize**2));
+        } while (gameState.boards[randBoard].board[randCell]);
+
+        handeClick(randBoard, randCell);
     }
 
     function handeClick(board_id, cell_id) {
@@ -136,19 +164,19 @@ function Game({boardNum = 3, boardSize = 3}) {
             
             <div className="Game-boardwrapper">
             {gameState.boards.map((board) => {
-                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} {...board}/>)
+                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} mode={mode} playerOneNext={gameState.playerOneNext} {...board}/>)
             })}
             </div>
             {!gameState.gameOver &&
             (<p className="Game-currentplayer">
                 <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>Player One</span>
-                <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>Player Two</span>
+                <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>{playerTwo}</span>
             </p>)
             }
             {gameState.gameOver && (
             <div className="Game-gameover">
             <p>GAME OVER</p>
-            {gameState.playerOneNext ? (<p>Player Two Wins</p>) : (<p>Player One Wins</p>)}
+            {gameState.playerOneNext ? (<p>{`${playerTwo} Wins`}</p>) : (<p>Player One Wins</p>)}
                 <div className="Game-gameover-buttons">
                     <button onClick={resetGame}>Play Again</button>
                     <Link to="/">Go Back</Link>

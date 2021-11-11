@@ -21,3 +21,11 @@
 .Square:disabled:hover:before {
   content: "";
 }
+
+.computer-turn {
+  cursor: default;
+}
+
+.computer-turn:hover:before {
+  content: "";
+}
