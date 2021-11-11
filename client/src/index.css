@@ -2,7 +2,9 @@
 
 body {
   height: 100vh;
+  width: 100vw;
   background: linear-gradient(#f4a261, #e9c46a);
   background-repeat: no-repeat;
   background-size: cover;
+  margin: 0;
 }
