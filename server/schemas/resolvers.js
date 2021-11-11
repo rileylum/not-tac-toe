@@ -11,7 +11,7 @@ const {signToken} = require('../utils/auth');
     },
     Mutation: {
       login: async(_, {username, password}) => {
-        const user = await User.findOne({email});
+        const user = await User.findOne({username});
 
         if(!user) {
           throw new AuthenticationError("Incorrect username or password")
