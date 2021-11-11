@@ -7,6 +7,7 @@
   font-family: "Permanent Marker", cursive;
   font-size: 2em;
   cursor: pointer;
+  color: white;
 }
 
 .Square:hover:before {
@@ -15,7 +16,7 @@
 
 .Square:disabled {
   cursor: default;
-  opacity: 0.5;
+  background-color: rgba(42, 157, 143, 0.5);
 }
 
 .Square:disabled:hover:before {

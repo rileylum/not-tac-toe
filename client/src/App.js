@@ -7,18 +7,12 @@ import Setup from "./pages/Setup";
 import { useQuery } from "@apollo/client";
 
 import './App.css'
-import { GET_BOOKS } from "./utils/queries";
+
 
 function App() {
 
   const [setup, setSetup] = useState({boardNum: 1, boardSize: 3});
   const navigate = useNavigate();
-
-  const {loading, data} = useQuery(GET_BOOKS);
-
-  if (loading === false) {
-    console.log(data)
-  }
 
   function handleSetupUpdate(newSetup) {
     setSetup({...newSetup}, navigate("/game"));
