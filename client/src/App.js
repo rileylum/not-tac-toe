@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Setup from "./pages/Setup";
 import Game from "./pages/Game";
+import Profile from "./pages/Profile"
 
 import './App.css'
 import SignupForm from "./pages/Signup";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/setup" element={<Setup setup={setup} handleUpdate={handleSetupUpdate}/>} />
         <Route path="/game" element={<Game boardNum={setup.boardNum} boardSize={setup.boardSize}/>} />
       </Routes>
