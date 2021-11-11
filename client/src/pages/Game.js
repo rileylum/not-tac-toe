@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import { useMutation } from "@apollo/client";
 import { INCREMENT_WIN, INCREMENT_LOSS } from "../utils/mutations";
 import Auth from '../utils/auth';
-
+import {Link} from 'react-router-dom';
 import Board from '../components/Board';
 
 import './Game.css'
+
 
 function Game({boardNum = 3, boardSize = 3}) {
     // set up 3x3 gameboard in state
@@ -34,6 +35,14 @@ function Game({boardNum = 3, boardSize = 3}) {
             setGameState({...gameState, gameOver: true})
         }
     }, [gameState.boards]);
+
+    function resetGame() {
+        setGameState({
+            boards: createBoards(boardNum, boardSize),
+            gameOver: false,
+            playerOneNext: Math.random() < 0.5
+        })
+    }
 
     // create object which contains each board
     function createBoards(boardNum, boardSize) {
@@ -136,8 +145,16 @@ function Game({boardNum = 3, boardSize = 3}) {
                 <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>Player Two</span>
             </p>)
             }
-            {gameState.gameOver && (<p>GAME OVER</p>)}
-            {gameState.gameOver && (gameState.playerOneNext ? (<p>Player Two Wins</p>) : (<p>Player One Wins</p>))}
+            {gameState.gameOver && (
+            <div className="Game-gameover">
+            <p>GAME OVER</p>
+            {gameState.playerOneNext ? (<p>Player Two Wins</p>) : (<p>Player One Wins</p>)}
+                <div className="Game-gameover-buttons">
+                    <button onClick={resetGame}>Play Again</button>
+                    <Link to="/">Go Back</Link>
+                </div>
+            </div>
+            )}
         </div>
     )
 }

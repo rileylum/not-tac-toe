@@ -24,7 +24,7 @@ function App() {
     <div>
       <Navbar />
     <div className="container">
-      <h1>NOT TAC TOE</h1>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignupForm />} />
