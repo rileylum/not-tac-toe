@@ -35,10 +35,8 @@ function Game({boardNum = 3, boardSize = 3, mode='computer'}) {
             if (Auth.loggedIn()) {
                 console.log("user logged in");
                 if(!gameState.playerOneNext) {
-                    console.log("user wins");
                     incrementWin();
                 } else {
-                    console.log("user loses");
                     incrementLoss();
                 }
             }

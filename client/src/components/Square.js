@@ -5,11 +5,9 @@ import './Square.css';
 function Square({board_id, cell_id, value, complete, mode, playerOneNext, clickHandler}) {
 
     function handeClick() {
-        console.log(mode, playerOneNext);
         if (mode === 'computer' && playerOneNext) {
             return;
         } else {
-            console.log("player click");
             clickHandler(board_id, cell_id)
         }
     }
