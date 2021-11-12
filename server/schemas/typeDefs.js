@@ -44,6 +44,7 @@ const typeDefs = gql`
         incrementWin: User
         incrementLoss: User
         createGame(boards: [BoardInput]!): OnlineGame
+        playerJoin(_id: String!, username: String!): OnlineGame
         playerTurn(_id: String!, boards: [BoardInput]!): OnlineGame
     }
 `

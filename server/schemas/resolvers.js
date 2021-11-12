@@ -64,6 +64,23 @@ const {signToken} = require('../utils/auth');
           throw new Error("An error occured", err)
         }
       },
+      playerJoin: async(_, {_id, username}) => {
+        try{
+          const game = await OnlineGame.findOne({_id});
+          if(!game.playerOne) {
+            game.playerOne = username
+          } else if (!game.playerTwo) {
+            game.playerTwo = username
+          } else {
+            throw new Error("Game is full")
+          }
+          game.save();
+          return game;
+        } catch (err) {
+          console.log(err);
+          throw new Error("An unexpected error occured")
+        }
+      },
       playerTurn: async(_, {_id, boards}) => {
         try{
           const game = await OnlineGame.findOneAndUpdate({_id}, {boards, returnNewObject: true});
