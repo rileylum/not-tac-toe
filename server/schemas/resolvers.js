@@ -63,6 +63,14 @@ const {signToken} = require('../utils/auth');
         } catch (err) {
           throw new Error("An error occured", err)
         }
+      },
+      playerTurn: async(_, {_id, boards}) => {
+        try{
+          const game = await OnlineGame.findOneAndUpdate({_id}, {boards, returnNewObject: true});
+          return game;
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   };
