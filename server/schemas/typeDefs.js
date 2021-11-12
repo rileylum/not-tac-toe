@@ -13,8 +13,29 @@ const typeDefs = gql`
         user: User
     }
 
+    type OnlineGame {
+        _id: ID,
+        boards: [Board]
+        playerOneNext: Boolean
+        playerOne: String
+        playerTwo: String
+    }
+
+    type Board {
+        board_id: Int
+        board: [Boolean]
+        complete: Boolean
+    }
+
+    input BoardInput {
+        board_id: Int
+        board: [Boolean]
+        complete: Boolean
+    }
+
     type Query {
         user(username: String!): User
+        onlineGame(_id: String!): OnlineGame
     }
 
     type Mutation {
@@ -22,6 +43,7 @@ const typeDefs = gql`
         addUser(username: String!, password: String!): Auth
         incrementWin: User
         incrementLoss: User
+        createGame(boards: [BoardInput]!): OnlineGame
     }
 `
 module.exports = typeDefs;

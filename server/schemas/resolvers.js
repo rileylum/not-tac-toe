@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, OnlineGame } = require('../models');
 const {signToken} = require('../utils/auth');
 
 
@@ -7,6 +7,9 @@ const {signToken} = require('../utils/auth');
     Query: {
       user: async(_, {username}) => {
         return User.findOne({username})
+      },
+      onlineGame: async(_, {_id}) => {
+        return OnlineGame.findOne({_id})
       }
     },
     Mutation: {
@@ -53,6 +56,14 @@ const {signToken} = require('../utils/auth');
           throw new AuthenticationError("An unexpected error occured")
         }
       },
+      createGame: async(_, {boards}) => {
+        try {          
+          const game = await OnlineGame.create({boards});
+          return game;
+        } catch (err) {
+          throw new Error("An error occured", err)
+        }
+      }
     }
   };
 
