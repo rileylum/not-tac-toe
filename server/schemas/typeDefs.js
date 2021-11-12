@@ -17,6 +17,7 @@ const typeDefs = gql`
         _id: ID,
         boards: [Board]
         playerOneNext: Boolean
+        gameOver: Boolean
         playerOne: String
         playerTwo: String
     }

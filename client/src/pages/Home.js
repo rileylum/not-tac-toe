@@ -16,7 +16,7 @@ function Home({handleGameMode}) {
                 LOCAL MULTIPLAYER
             </button>
         </Link>
-        <Link to="/setup">
+        <Link to="/onlinesetup">
             <button onClick={() => handleGameMode("online")} className="Home-button">
                 ONLINE MULTIPLAYER
             </button>

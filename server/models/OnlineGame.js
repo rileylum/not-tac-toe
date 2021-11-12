@@ -20,6 +20,10 @@ const onlineGameSchema = new Schema(
             type: Boolean,
             default: false
         },
+        gameOver: {
+            type: Boolean,
+            default: false
+        },
         playerOne: String,
         playerTwo: String
     },

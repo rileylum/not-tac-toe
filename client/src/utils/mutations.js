@@ -47,3 +47,51 @@ export const INCREMENT_LOSS = gql`
         }
     }
 `
+
+export const CREATE_GAME = gql`
+    mutation createGame($boards: [BoardInput]!) {
+        createGame(boards: $boards) {
+            _id,
+            boards {
+                board_id
+                board
+                complete
+            }
+            gameOver
+            playerOneNext
+            playerOne
+            playerTwo
+        }
+    }
+`
+export const JOIN_GAME = gql`
+    mutation playerJoin($id: String!, $username: String!) {
+        playerJoin(_id: $id, username: $username) {
+            _id
+            boards {
+                board_id
+                board
+                complete
+            }
+            playerOneNext
+            playerOne
+            playerTwo
+        }
+    }
+`
+
+export const PLAYER_TURN = gql`
+    mutation playerTurn($id: String!, $boards: [BoardInput]!) {
+        playerTurn(_id: $id, boards: $boards) {
+            _id
+            boards {
+                board_id
+                board
+                complete
+            }
+            playerOneNext
+            playerOne
+            playerTwo
+        }
+    }
+`

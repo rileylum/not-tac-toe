@@ -10,3 +10,20 @@ export const GET_USER = gql`
         }
     }
 `
+
+export const GET_ONLINE_GAME = gql`
+    query onlineGame ($id: String!) {
+        onlineGame(_id: $id) {
+            _id
+            boards {
+                board_id
+                board
+                complete
+            }
+            playerOneNext
+            gameOver
+            playerOne
+            playerTwo
+        }
+    }
+`
