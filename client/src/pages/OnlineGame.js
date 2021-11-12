@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {useParams} from 'react-router-dom';
 import { GET_ONLINE_GAME } from "../utils/queries";
 import { CREATE_GAME, JOIN_GAME, PLAYER_TURN, INCREMENT_WIN, INCREMENT_LOSS } from "../utils/mutations";
@@ -15,29 +15,27 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         boards: createBoards(boardNum, boardSize),
         gameOver: false,
         playerOneNext: Math.random() < 0.5,
-        newGame: false
     });
 
     const {game_id} = useParams();
-    console.log(game_id);
 
-    const [createGame] = useMutation(CREATE_GAME);
-    const [joinGame] = useMutation(JOIN_GAME);
+    const {loading, error, data, startPolling, stopPolling} = useQuery(GET_ONLINE_GAME, {
+        variables: {id: game_id},
+        pollInterval: 3000,
+    } );
+
     const [playerTurn] = useMutation(PLAYER_TURN);
     const [incrementWin] = useMutation(INCREMENT_WIN);
     const [incrementLoss] = useMutation(INCREMENT_LOSS);
 
-    // GET DATA FROM GAME
-    const [getGame, {loading, error, data}] = useLazyQuery(GET_ONLINE_GAME, {variables: {id: game_id}})
-
     useEffect(() => {
-        initGame();
-    }, [])
+        console.log("polling");
+        if(data) {
+            setGameState({...gameState, boards: data.onlineGame.boards})
+        }
+    }, [data]);
 
-    async function initGame() {
-        const data = await getGame();
-        console.log(data);
-    }
+    // GET DATA FROM GAME
 
     useEffect(() => {
         // handle game over
@@ -85,19 +83,6 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         return true;;
     }
 
-    function computerTurn() {
-        let randBoard;
-        do {
-            randBoard = Math.floor(Math.random() * boardNum);
-        } while (gameState.boards[randBoard].complete);
-        let randCell;
-        do {
-            randCell = Math.floor(Math.random() * (boardSize**2));
-        } while (gameState.boards[randBoard].board[randCell]);
-
-        handeClick(randBoard, randCell);
-    }
-
     function handeClick(board_id, cell_id) {
         // deep clone state
         const oldState = JSON.parse(JSON.stringify(gameState));
@@ -108,6 +93,8 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         currentBoard.board[cell_id] = !currentBoard.board[cell_id];
         // check if clicked board is complete
         currentBoard.complete = isBoardComplete(currentBoard.board, cell_id);
+        console.log(newBoards);
+        playerTurn({variables: {id: game_id, boards: newBoards}});
         // update game state with new boards and change current player
         setGameState({...gameState, boards: newBoards, playerOneNext: !oldState.playerOneNext});
     }
@@ -167,7 +154,7 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
             
             <div className="Game-boardwrapper">
             {gameState.boards.map((board) => {
-                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} mode={mode} playerOneNext={gameState.playerOneNext} {...board}/>)
+                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} mode="online" playerOneNext={gameState.playerOneNext} {...board}/>)
             })}
             </div>
             {!gameState.gameOver &&

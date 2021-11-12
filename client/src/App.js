@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Setup from "./pages/Setup";
 import OnlineSetup from "./pages/OnlineSetup";
+import Lobby from "./pages/Lobby";
 import Game from "./pages/Game";
 import OnlineGame from "./pages/OnlineGame";
 import Profile from "./pages/Profile"
@@ -45,6 +46,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/setup" element={<Setup setup={setup} handleUpdate={handleSetupUpdate}/>} />
         <Route path="/onlinesetup" element={<OnlineSetup setup={setup} handleUpdate={handleSetupUpdate}/>} />
+        <Route path="/join/:game_id" element={<Lobby />} />
         <Route path="/game" element={<Game boardNum={setup.boardNum} boardSize={setup.boardSize} mode={setup.mode}/>} />
         <Route path="/game/:game_id" element={<OnlineGame boardNum={setup.boardNum} boardSize={setup.boardSize} mode={setup.mode}/>} />
       </Routes>
