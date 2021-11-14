@@ -15,6 +15,8 @@ const typeDefs = gql`
 
     type OnlineGame {
         _id: ID,
+        boardNum: Int
+        boardSize: Int
         boards: [Board]
         playerOneNext: Boolean
         gameOver: Boolean
@@ -44,9 +46,9 @@ const typeDefs = gql`
         addUser(username: String!, password: String!): Auth
         incrementWin: User
         incrementLoss: User
-        createGame(boards: [BoardInput]!): OnlineGame
+        createGame(boardNum: Int!, boardSize: Int!, boards: [BoardInput]!): OnlineGame
         playerJoin(_id: String!, username: String!): OnlineGame
-        playerTurn(_id: String!, boards: [BoardInput]!): OnlineGame
+        playerTurn(_id: String!, boards: [BoardInput]!, playerOneNext: Boolean!): OnlineGame
     }
 `
 module.exports = typeDefs;

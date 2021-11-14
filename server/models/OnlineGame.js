@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const {v4: uuidv4} = require('uuid');
-const {userSchema} = require('./User');
 
 const onlineGameSchema = new Schema(
     {
@@ -10,6 +9,14 @@ const onlineGameSchema = new Schema(
             default: function genUUID() {
                 return uuidv4();
             }
+        },
+        boardNum: {
+            type: Number,
+            required: true
+        },
+        boardSize: {
+            type: Number,
+            required: true
         },
         boards: [{
             board_id: Number,

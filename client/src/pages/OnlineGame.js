@@ -9,11 +9,14 @@ import Board from '../components/Board';
 
 import './Game.css'
 
-function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
+function OnlineGame({multiplayerNo}) {
     // set up 3x3 gameboard in state
     const [gameState, setGameState] = useState({
-        boards: createBoards(boardNum, boardSize),
+        boards: null,
         gameOver: false,
+        boardNum: null,
+        boardSize: null,
+        loaded: false,
         playerOneNext: Math.random() < 0.5,
     });
 
@@ -30,8 +33,17 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
 
     useEffect(() => {
         console.log("polling");
+        console.log(data);
         if(data) {
-            setGameState({...gameState, boards: data.onlineGame.boards})
+            console.log("updating state");
+            setGameState({
+                ...gameState,
+                 boardNum: data.onlineGame.boardNum,
+                 boardSize: data.onlineGame.boardSize,
+                 boards: data.onlineGame.boards,
+                 playerOneNext: data.onlineGame.playerOneNext,
+                 loaded: true
+                })
         }
     }, [data]);
 
@@ -54,7 +66,8 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
 
     function resetGame() {
         setGameState({
-            boards: createBoards(boardNum, boardSize),
+            ...gameState,
+            boards: createBoards(gameState.boardNum, gameState.boardSize),
             gameOver: false,
             playerOneNext: Math.random() < 0.5
         })
@@ -75,12 +88,15 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
     }
     // check if all boards are completed
     function isGameOver() {
-        for (let board of gameState.boards) {
-            if (!board.complete) {
-                return false;
+        if(gameState.boards) {
+            for (let board of gameState.boards) {
+                if (!board.complete) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;;
+        return false;
     }
 
     function handeClick(board_id, cell_id) {
@@ -93,19 +109,18 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         currentBoard.board[cell_id] = !currentBoard.board[cell_id];
         // check if clicked board is complete
         currentBoard.complete = isBoardComplete(currentBoard.board, cell_id);
-        console.log(newBoards);
-        playerTurn({variables: {id: game_id, boards: newBoards}});
+        playerTurn({variables: {id: game_id, boards: newBoards, playerOneNext: !oldState.playerOneNext}});    
         // update game state with new boards and change current player
         setGameState({...gameState, boards: newBoards, playerOneNext: !oldState.playerOneNext});
     }
 
     function isBoardComplete(currentBoard, cell_id) {
-        const cellRow = Math.floor((cell_id)/boardSize);
-        const cellCol = (cell_id)%boardSize;
+        const cellRow = Math.floor((cell_id)/gameState.boardSize);
+        const cellCol = (cell_id)%gameState.boardSize;
 
         // check row
         let rowCheck = true;
-        for (let i = cellRow*boardSize; i < cellRow*boardSize+boardSize; i++) {
+        for (let i = cellRow*gameState.boardSize; i < cellRow*gameState.boardSize+gameState.boardSize; i++) {
             if(i !== cell_id) {
                 if (!currentBoard[i]) rowCheck = false;
             }
@@ -114,7 +129,7 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
 
         // check column
         let colCheck = true;
-        for (let i = cellCol; i < boardSize**2; i += boardSize) {
+        for (let i = cellCol; i < gameState.boardSize**2; i += gameState.boardSize) {
             if (i !== cell_id) {
  
                 if(!currentBoard[i]) colCheck = false;
@@ -127,7 +142,7 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         // left to right
         if (cellCol === cellRow) {
             diagCheck = true;
-            for (let i = 0; i < boardSize**2; i+=(boardSize+1)) {
+            for (let i = 0; i < gameState.boardSize**2; i+=(gameState.boardSize+1)) {
                 if (i !== cell_id) {
                     if(!currentBoard[i]) diagCheck = false;
                 }
@@ -136,9 +151,9 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         }
 
         // right to left
-        if ((cellCol+cellRow) === boardSize-1) {
+        if ((cellCol+cellRow) === gameState.boardSize-1) {
             diagCheck = true;
-            for (let i = boardSize-1; i < boardSize**2-1; i += (boardSize-1)) {
+            for (let i = gameState.boardSize-1; i < gameState.boardSize**2-1; i += (gameState.boardSize-1)) {
                 if (i !== cell_id) {
                     if (!currentBoard[i]) diagCheck = false;
                 }
@@ -149,14 +164,15 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
         return false;
     }
 
-    return (
+    return(
+        <div>
         <div className="Game">
             
-            <div className="Game-boardwrapper">
+            {gameState.loaded  && <div className="Game-boardwrapper">
             {gameState.boards.map((board) => {
-                return (<Board key={`board-${board.board_id}`} boardSize={boardSize} clickHandler={handeClick} mode="online" playerOneNext={gameState.playerOneNext} {...board}/>)
+                return (<Board key={`board-${board.board_id}`} boardSize={gameState.boardSize} clickHandler={handeClick} mode="online" playerOneNext={gameState.playerOneNext} multiplayerNo={multiplayerNo} {...board}/>)
             })}
-            </div>
+            </div> }
             {!gameState.gameOver &&
             (<p className="Game-currentplayer">
                 <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>Player One</span>
@@ -173,6 +189,7 @@ function OnlineGame({boardNum = 3, boardSize = 3, mode='online'}) {
                 </div>
             </div>
             )}
+        </div>
         </div>
     )
 }

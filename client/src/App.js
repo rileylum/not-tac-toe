@@ -18,12 +18,16 @@ import LoginForm from "./pages/Login";
 
 function App() {
 
-  const [setup, setSetup] = useState({boardNum: 1, boardSize: 3, mode:'computer', game_id: null});
+  const [setup, setSetup] = useState({boardNum: 1, boardSize: 3, mode:'computer', game_id: null, multiplayerNo: null});
   const navigate = useNavigate();
 
   function handleGameMode(mode) {
     setSetup({...setup, mode: mode})
   }
+
+  function handleMultiplayerJoin(newSetup) {
+    setSetup({...setup, ...newSetup})
+  };
 
   function handleSetupUpdate(newSetup) {
     if(setup.mode === 'online') {
@@ -46,9 +50,9 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/setup" element={<Setup setup={setup} handleUpdate={handleSetupUpdate}/>} />
         <Route path="/onlinesetup" element={<OnlineSetup setup={setup} handleUpdate={handleSetupUpdate}/>} />
-        <Route path="/join/:game_id" element={<Lobby />} />
+        <Route path="/join/:game_id" element={<Lobby handleUpdate={handleMultiplayerJoin} />} />
         <Route path="/game" element={<Game boardNum={setup.boardNum} boardSize={setup.boardSize} mode={setup.mode}/>} />
-        <Route path="/game/:game_id" element={<OnlineGame boardNum={setup.boardNum} boardSize={setup.boardSize} mode={setup.mode}/>} />
+        <Route path="/game/:game_id" element={<OnlineGame multiplayerNo={setup.multiplayerNo}/>} />
       </Routes>
     </div>
     </div>

@@ -15,6 +15,8 @@ export const GET_ONLINE_GAME = gql`
     query onlineGame ($id: String!) {
         onlineGame(_id: $id) {
             _id
+            boardNum
+            boardSize
             boards {
                 board_id
                 board

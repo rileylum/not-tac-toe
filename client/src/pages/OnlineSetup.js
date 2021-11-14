@@ -21,9 +21,9 @@ function OnlineSetup({setup, handleUpdate}) {
 
     async function handleCreateGame() {
         const boards = createBoards(newSetup.boardNum, newSetup.boardSize);
-        console.log(boards);
-        const newGame = await createGame({variables: {boards}});
-        handleUpdate({boardNum: newSetup.boardNum, boardSize: newSetup.boardSize, game_id: newGame.data.createGame._id})
+        console.log(typeof newSetup.boardNum, newSetup.boardSize, boards);
+        const newGame = await createGame({variables: {boardNum: newSetup.boardNum, boardSize: newSetup.boardSize, boards}});
+        handleUpdate({game_id: newGame.data.createGame._id})
     }
 
     function createBoards(boardNum, boardSize) {

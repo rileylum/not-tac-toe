@@ -49,9 +49,11 @@ export const INCREMENT_LOSS = gql`
 `
 
 export const CREATE_GAME = gql`
-    mutation createGame($boards: [BoardInput]!) {
-        createGame(boards: $boards) {
+    mutation createGame($boardNum: Int!, $boardSize: Int!, $boards: [BoardInput]!) {
+        createGame(boardNum: $boardNum, boardSize: $boardSize, boards: $boards) {
             _id,
+            boardNum
+            boardSize
             boards {
                 board_id
                 board
@@ -67,7 +69,9 @@ export const CREATE_GAME = gql`
 export const JOIN_GAME = gql`
     mutation playerJoin($id: String!, $username: String!) {
         playerJoin(_id: $id, username: $username) {
-            _id
+            _id,
+            boardSize
+            boardNum
             boards {
                 board_id
                 board
@@ -81,9 +85,11 @@ export const JOIN_GAME = gql`
 `
 
 export const PLAYER_TURN = gql`
-    mutation playerTurn($id: String!, $boards: [BoardInput]!) {
-        playerTurn(_id: $id, boards: $boards) {
+    mutation playerTurn($id: String!, $playerOneNext: Boolean! $boards: [BoardInput]!) {
+        playerTurn(_id: $id, playerOneNext: $playerOneNext, boards: $boards) {
             _id
+            boardNum
+            boardSize
             boards {
                 board_id
                 board

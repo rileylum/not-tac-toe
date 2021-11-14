@@ -56,9 +56,9 @@ const {signToken} = require('../utils/auth');
           throw new AuthenticationError("An unexpected error occured")
         }
       },
-      createGame: async(_, {boards}) => {
+      createGame: async(_, {boardNum, boardSize, boards}) => {
         try {          
-          const game = await OnlineGame.create({boards});
+          const game = await OnlineGame.create({boardNum, boardSize, boards});
           return game;
         } catch (err) {
           throw new Error("An error occured", err)
@@ -81,9 +81,9 @@ const {signToken} = require('../utils/auth');
           throw new Error("An unexpected error occured")
         }
       },
-      playerTurn: async(_, {_id, boards}) => {
+      playerTurn: async(_, {_id, playerOneNext, boards}) => {
         try{
-          const game = await OnlineGame.findOneAndUpdate({_id}, {boards, returnNewObject: true});
+          const game = await OnlineGame.findOneAndUpdate({_id}, {playerOneNext, boards}, {returnNewObject: true});
           return game;
         } catch (err) {
           console.log(err);

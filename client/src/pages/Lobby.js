@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { JOIN_GAME } from "../utils/mutations";
 import { GET_ONLINE_GAME } from "../utils/queries";
 
-function Lobby() {
+function Lobby({handleUpdate}) {
 
     const [players, setPlayers] = useState({playerOne: null, playerTwo: null});
 
@@ -26,7 +26,10 @@ function Lobby() {
     useEffect(() => {
         async function tryJoin() {
             try {
-                await joinGame({variables: {id: game_id, username: "player"}})
+                const game = await joinGame({variables: {id: game_id, username: "player"}});
+                if (!game.data.playerJoin.playerTwo) {
+                    handleUpdate({multiplayerNo: 1})
+                } else handleUpdate({multiplayerNo:2});
             } catch (err) {
                 alert("Game full")
                 navigate('/');
