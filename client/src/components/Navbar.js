@@ -10,6 +10,10 @@ function Navbar() {
     return(
         <nav className="Navbar">
             <label className="Navbar-logo">NOT TAC TOE</label>
+            <input type="checkbox" id="check"/>
+            <label htmlFor="check" class="Navbar-btn">
+                <i class="fas fa-bars"></i>
+            </label>
             <ul className="Navbar-links">
                 <li><NavLink to="/">Home</NavLink></li>
                 {Auth.loggedIn() ? (

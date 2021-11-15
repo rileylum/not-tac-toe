@@ -38,7 +38,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="outerDiv">
       <Navbar />
     <div className="container">
       

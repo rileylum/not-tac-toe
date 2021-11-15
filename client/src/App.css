@@ -1,10 +1,11 @@
+.outerDiv {
+  height: 100%;
+}
+
 .container {
-  margin: auto;
+  margin: 100px auto 0;
   width: 80%;
   min-height: 80%;
-  position: fixed;
-  top: 15%;
-  left: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,4 +15,10 @@
   border: 0px solid;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: 98%;
+  }
 }

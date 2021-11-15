@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useMutation } from "@apollo/client";
 import { CREATE_GAME } from "../utils/mutations";
 import './Setup.css';
+import './Form.css';
 
 function OnlineSetup({setup, handleUpdate}) {
     const {boardNum, boardSize} = setup;
@@ -64,7 +65,7 @@ function OnlineSetup({setup, handleUpdate}) {
         )}
         {state.page === 'join' && (
             <div className="Setup-wrapper">
-                <form className="Setup-startgame Setup-inputwrapper">
+                <form className="Setup-startgame Setup-inputwrapper Form">
                     <label className="Form-label" htmlFor="gameId">Game ID</label>
                     <input className="Form-input" type="text" id="gameId" name="gameId" value={state.game_id} onChange={handeInputChange}/>
                     <button onClick={handleFormSubmit}><h2>JOIN GAME</h2></button>

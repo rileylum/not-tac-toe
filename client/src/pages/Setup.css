@@ -26,6 +26,7 @@
 
 .Setup-inputwrapper h1 {
   font-size: 1rem;
+  width: 50%;
 }
 
 .Setup-input {
@@ -33,7 +34,8 @@
   border: 3px solid #e76f51;
   background: transparent;
   border-radius: 10rem;
-  width: 50%;
+  min-width: 200px;
+  width: 30%;
   padding: 0 1rem;
   justify-content: space-between;
   align-items: center;

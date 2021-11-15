@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 80%;
+  min-width: 350px;
 }
 
 .Game h1 {
@@ -61,4 +62,10 @@
   outline: none;
   cursor: pointer;
   margin: 10px 0;
+}
+
+@media screen and (max-width: 600px) {
+  .Game {
+    flex-direction: column-reverse;
+  }
 }

@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  height: 10%;
+  height: 80px;
   background-color: #12242b;
   font-family: "Roboto", sans-serif;
   color: white;
@@ -17,6 +17,20 @@
   font-size: 2rem;
   margin-left: 50px;
   color: #e76f51;
+}
+
+.Navbar-btn {
+  font-size: 35px;
+  color: white;
+  float: right;
+  margin-right: 30px;
+  line-height: 60px;
+  cursor: pointer;
+  display: none;
+}
+
+#check {
+  display: none;
 }
 
 .Navbar-links {
@@ -40,4 +54,28 @@
 .Navbar a.active,
 .Navbar a:hover {
   color: #e76f51;
+}
+
+@media (max-width: 768px) {
+  .Navbar-btn {
+    display: block;
+  }
+
+  .Navbar-links {
+    position: fixed;
+    background-color: #12242b;
+    text-align: center;
+    width: 100%;
+    top: 64px;
+    left: 100%;
+    transition: all 0.5s;
+  }
+  .Navbar-links li {
+    display: block;
+    margin: 10px;
+  }
+  #check:checked ~ .Navbar-links {
+    left: -10px;
+    z-index: 100;
+  }
 }
