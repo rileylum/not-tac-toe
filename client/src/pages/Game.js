@@ -20,7 +20,16 @@ function Game({boardNum = 3, boardSize = 3, mode='computer'}) {
     const [incrementWin] = useMutation(INCREMENT_WIN);
     const [incrementLoss] = useMutation(INCREMENT_LOSS);
 
+    const playerOne = setPlayerOne();
     const playerTwo =  setPlayerTwo();
+
+    function setPlayerOne() {
+        if(Auth.loggedIn()) {
+            return Auth.getProfile().data.username;
+        } else {
+            return "Player One";
+        }
+    }
     function setPlayerTwo() {
         if (mode === 'computer') {
             return "Computer"
@@ -166,14 +175,14 @@ function Game({boardNum = 3, boardSize = 3, mode='computer'}) {
             </div>
             {!gameState.gameOver &&
             (<p className="Game-currentplayer">
-                <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>Player One</span>
+                <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>{playerOne}</span>
                 <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>{playerTwo}</span>
             </p>)
             }
             {gameState.gameOver && (
             <div className="Game-gameover">
             <p>GAME OVER</p>
-            {gameState.playerOneNext ? (<p>{`${playerTwo} Wins`}</p>) : (<p>Player One Wins</p>)}
+            {gameState.playerOneNext ? (<p>{`${playerTwo} Wins`}</p>) : (<p>{playerOne} Wins</p>)}
                 <div className="Game-gameover-buttons">
                     <button onClick={resetGame}>Play Again</button>
                     <Link to="/">Go Back</Link>
