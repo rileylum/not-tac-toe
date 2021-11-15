@@ -3,6 +3,7 @@ import {useParams, useNavigate, Link} from 'react-router-dom';
 import { useMutation, useQuery } from "@apollo/client";
 import { JOIN_GAME } from "../utils/mutations";
 import { GET_ONLINE_GAME } from "../utils/queries";
+import Auth from '../utils/auth';
 
 function Lobby({handleUpdate}) {
 
@@ -26,7 +27,9 @@ function Lobby({handleUpdate}) {
     useEffect(() => {
         async function tryJoin() {
             try {
-                const game = await joinGame({variables: {id: game_id, username: "player"}});
+                const user = Auth.loggedIn() ? Auth.getProfile().data.username : "player";
+                console.log(user);
+                const game = await joinGame({variables: {id: game_id, username: user}});
                 if(game) {
                     if (!game.data.playerJoin.playerTwo) {
                         handleUpdate({multiplayerNo: 1})

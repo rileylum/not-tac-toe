@@ -67,10 +67,19 @@ const {signToken} = require('../utils/auth');
       playerJoin: async(_, {_id, username}) => {
         try{
           const game = await OnlineGame.findOne({_id});
+          console.log(game);
           if(!game.playerOne) {
-            game.playerOne = username
+            if (username === "player") {
+              game.playerOne = "Player One"
+            } else {
+              game.playerOne = username
+            }
           } else if (!game.playerTwo) {
-            game.playerTwo = username
+            if (username === "player") {
+              game.playerTwo = "Player Two"
+            } else {
+              game.playerTwo = username
+            }
           } else {
             throw new Error("Game is full")
           }

@@ -18,6 +18,8 @@ function OnlineGame({multiplayerNo}) {
         boardSize: null,
         loaded: false,
         playerOneNext: Math.random() < 0.5,
+        playerOne: 'Player One',
+        playerTwo: 'Player Two',
     });
 
     const {game_id} = useParams();
@@ -33,12 +35,15 @@ function OnlineGame({multiplayerNo}) {
 
     useEffect(() => {
         if(data) {
+            console.log(data);
             setGameState({
                 ...gameState,
                  boardNum: data.onlineGame.boardNum,
                  boardSize: data.onlineGame.boardSize,
                  boards: data.onlineGame.boards,
                  playerOneNext: data.onlineGame.playerOneNext,
+                 playerOne: data.onlineGame.playerOne,
+                 playerTwo: data.onlineGame.playerTwo,
                  loaded: true
                 })
         }
@@ -171,14 +176,14 @@ function OnlineGame({multiplayerNo}) {
             </div> }
             {!gameState.gameOver &&
             (<p className="Game-currentplayer">
-                <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>Player One</span>
-                <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>Player Two</span>
+                <span style={{opacity: `${gameState.playerOneNext ? "0.5" : "1"}`}}>{gameState.playerOne} {multiplayerNo === 1 && "(you)"}</span>
+                <span style={{opacity: `${gameState.playerOneNext ? "1" : "0.5"}`}}>{gameState.playerTwo} {multiplayerNo === 2 && "(you)"}</span>
             </p>)
             }
             {gameState.gameOver && (
             <div className="Game-gameover">
             <p>GAME OVER</p>
-            {gameState.playerOneNext ? (<p>Player Two Wins</p>) : (<p>Player One Wins</p>)}
+            {gameState.playerOneNext ? (<p>{gameState.playerTwo} Wins</p>) : (<p>{gameState.playerOne} Wins</p>)}
                 <div className="Game-gameover-buttons">
                     <button onClick={resetGame}>Play Again</button>
                     <Link to="/">Go Back</Link>
