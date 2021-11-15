@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useNavigate } from "react-router";
 import { useMutation } from "@apollo/client";
 import { CREATE_GAME } from "../utils/mutations";
 import './Setup.css';
@@ -6,6 +7,8 @@ import './Setup.css';
 function OnlineSetup({setup, handleUpdate}) {
     const {boardNum, boardSize} = setup;
     const [newSetup, setNewSetup] = useState({boardNum: boardNum, boardSize })
+    const [state, setState] = useState({page: null, game_id: null})
+    const navigate = useNavigate();
 
     const [createGame] = useMutation(CREATE_GAME);
 
@@ -19,9 +22,18 @@ function OnlineSetup({setup, handleUpdate}) {
         setNewSetup({...newState});
     }
 
+    const handeInputChange = (evt) => {
+        const {value} = evt.target;
+        setState({...state, game_id: value})
+    };
+
+    const handleFormSubmit = async (evt) => {
+        evt.preventDefault();
+        navigate(`/join/${state.game_id}`);
+    }
+
     async function handleCreateGame() {
         const boards = createBoards(newSetup.boardNum, newSetup.boardSize);
-        console.log(typeof newSetup.boardNum, newSetup.boardSize, boards);
         const newGame = await createGame({variables: {boardNum: newSetup.boardNum, boardSize: newSetup.boardSize, boards}});
         handleUpdate({game_id: newGame.data.createGame._id})
     }
@@ -41,6 +53,25 @@ function OnlineSetup({setup, handleUpdate}) {
 
     return (
         <div className="Setup">
+
+        {!state.page && (
+            <div className="Setup-wrapper">
+                <div className="Setup-startgame Setup-inputwrapper">
+                    <button onClick={() => setState({page: 'setup'})}><h2>HOST GAME</h2></button>
+                    <button onClick={() => setState({page: 'join'})}><h2>JOIN GAME</h2></button>
+                </div>
+            </div>
+        )}
+        {state.page === 'join' && (
+            <div className="Setup-wrapper">
+                <form className="Setup-startgame Setup-inputwrapper">
+                    <label className="Form-label" htmlFor="gameId">Game ID</label>
+                    <input className="Form-input" type="text" id="gameId" name="gameId" value={state.game_id} onChange={handeInputChange}/>
+                    <button onClick={handleFormSubmit}><h2>JOIN GAME</h2></button>
+                </form>
+            </div>
+        )}
+        {state.page === 'setup' && (
             <div className="Setup-wrapper">
             <div className="Setup-inputwrapper">
             <h1>Number of Boards:</h1>
@@ -70,10 +101,10 @@ function OnlineSetup({setup, handleUpdate}) {
                 </div>
             </div>
             </div>
-            </div>
             <div className="Setup-startgame">
-            <button onClick={() => handleCreateGame({boardNum: newSetup.boardNum, boardSize: newSetup.boardSize})}><h2>CREATE GAME</h2></button>
+                <button onClick={() => handleCreateGame({boardNum: newSetup.boardNum, boardSize: newSetup.boardSize})}><h2>CREATE GAME</h2></button>
             </div>
+            </div>)}
       </div>
     )
 }

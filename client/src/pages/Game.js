@@ -33,7 +33,6 @@ function Game({boardNum = 3, boardSize = 3, mode='computer'}) {
         // handle game over
         if (isGameOver()) {
             if (Auth.loggedIn()) {
-                console.log("user logged in");
                 if(!gameState.playerOneNext) {
                     incrementWin();
                 } else {

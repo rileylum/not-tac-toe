@@ -7,8 +7,6 @@ function Profile() {
 
     const {loading, data} = useQuery(GET_USER, {variables: {username: Auth.getProfile().data.username}});
 
-    console.log(data);
-
     return (
         <div>
         <h1>MY PROFILE</h1>

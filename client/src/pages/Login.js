@@ -27,12 +27,10 @@ function LoginForm() {
 
         try {
             const { data } = await loginUser({variables: {...userFormData}});
-            console.log(data);
             Auth.login(data.login.token);
         } catch (err) {
             console.log(err);
         } finally {
-            console.log("hello")
             setUserFormData({
                 username: '',
                 password: ''

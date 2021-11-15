@@ -5,7 +5,6 @@ import './Square.css';
 function Square({board_id, cell_id, value, complete, mode, playerOneNext, multiplayerNo, clickHandler}) {
 
     function handeClick() {
-        console.log(playerOneNext, multiplayerNo);
         if (mode === 'computer' && playerOneNext) {
             return;
         } else if (mode === 'online') {

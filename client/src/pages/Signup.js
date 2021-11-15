@@ -31,7 +31,6 @@ function SignupForm() {
         } catch (err) {
             console.log(err);
         } finally {
-            console.log("hello")
             setUserFormData({
                 username: '',
                 password: ''

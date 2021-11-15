@@ -27,11 +27,13 @@ function Lobby({handleUpdate}) {
         async function tryJoin() {
             try {
                 const game = await joinGame({variables: {id: game_id, username: "player"}});
-                if (!game.data.playerJoin.playerTwo) {
-                    handleUpdate({multiplayerNo: 1})
-                } else handleUpdate({multiplayerNo:2});
+                if(game) {
+                    if (!game.data.playerJoin.playerTwo) {
+                        handleUpdate({multiplayerNo: 1})
+                    } else handleUpdate({multiplayerNo:2});
+                }
             } catch (err) {
-                alert("Game full")
+                alert("Game full or does not exist")
                 navigate('/');
             }
         }
@@ -39,11 +41,12 @@ function Lobby({handleUpdate}) {
     }, [])
 
     useEffect(() => {
-        console.log(data);
         if(data) {
-            const newPlayerOne = data.onlineGame.playerOne;
-            const newPlayerTwo = data.onlineGame.playerTwo;
-            setPlayers({playerOne: newPlayerOne, playerTwo: newPlayerTwo})
+            if(data.onlineGame) {
+                const newPlayerOne = data.onlineGame.playerOne;
+                const newPlayerTwo = data.onlineGame.playerTwo;
+                setPlayers({playerOne: newPlayerOne, playerTwo: newPlayerTwo});
+            }
         }
     }, [data])
 

@@ -32,10 +32,7 @@ function OnlineGame({multiplayerNo}) {
     const [incrementLoss] = useMutation(INCREMENT_LOSS);
 
     useEffect(() => {
-        console.log("polling");
-        console.log(data);
         if(data) {
-            console.log("updating state");
             setGameState({
                 ...gameState,
                  boardNum: data.onlineGame.boardNum,
@@ -53,7 +50,6 @@ function OnlineGame({multiplayerNo}) {
         // handle game over
         if (isGameOver()) {
             if (Auth.loggedIn()) {
-                console.log("user logged in");
                 if(!gameState.playerOneNext) {
                     incrementWin();
                 } else {

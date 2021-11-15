@@ -31,7 +31,6 @@ function App() {
 
   function handleSetupUpdate(newSetup) {
     if(setup.mode === 'online') {
-      console.log(newSetup);
       setSetup({...setup, ...newSetup}, navigate(`/join/${newSetup.game_id}`))
     } else {
       setSetup({...setup, ...newSetup}, navigate("/game"));
