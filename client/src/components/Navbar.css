@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 500;
 }
 
 .Navbar-logo {
@@ -75,7 +76,6 @@
     margin: 10px;
   }
   #check:checked ~ .Navbar-links {
-    left: -10px;
-    z-index: 100;
+    left: -40px;
   }
 }
