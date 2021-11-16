@@ -26,7 +26,7 @@ function OnlineGame({multiplayerNo}) {
 
     const {loading, error, data, startPolling, stopPolling} = useQuery(GET_ONLINE_GAME, {
         variables: {id: game_id},
-        pollInterval: 3000,
+        pollInterval: 1500,
     } );
 
     const [playerTurn] = useMutation(PLAYER_TURN);
