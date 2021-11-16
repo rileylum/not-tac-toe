@@ -44,7 +44,7 @@ You can also view the project hosted live on [Heroku](https://not-tac-toe.heroku
 
 Here is a quick animation demoing the project:
 
-![Animation showing the app functionality: signing up, setting up a game, and playing against a computer opponent](./MD_resources/demo.gif)
+![Animation showing the app functionality: signing up, setting up a game, and playing against a computer opponent](./MD_resources/Demo.gif)
 
 ## Contribution Instructions
 
