@@ -5,6 +5,8 @@ import { JOIN_GAME } from "../utils/mutations";
 import { GET_ONLINE_GAME } from "../utils/queries";
 import Auth from '../utils/auth';
 
+import './Lobby.css';
+
 function Lobby({handleUpdate}) {
 
     const [players, setPlayers] = useState({playerOne: null, playerTwo: null});
@@ -56,9 +58,9 @@ function Lobby({handleUpdate}) {
     return (
         <div>
             <h1>LOBBY</h1>
-            <p>{players.playerOne || "Waiting"}</p>
-            <p>{players.playerTwo || "Waiting"}</p>
-            {players.playerTwo && (<Link to={`/game/${game_id}`}>Start Game</Link>)}
+            <h2 className="Lobby-player">Player One: <span> {players.playerOne || "Waiting"}</span></h2>
+            <h2 className="Lobby-player">Player Two: <span> {players.playerTwo || "Waiting"}</span></h2>
+            {players.playerTwo && (<Link className="Start-button" to={`/game/${game_id}`}>Start Game</Link>)}
         </div>
     )
 }
